@@ -26,9 +26,7 @@ System.register(['angular2/core', '../../models/todo', '../todo-list/todo-list.c
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
-                    this.todos = [];
-                    this.todos.push(new todo_1.Todo('Taste JavaScript', true));
-                    this.todos.push(new todo_1.Todo('Buy a unicorn', false));
+                    this.todos = todo_1.Todo.findAll();
                 }
                 AppComponent = __decorate([
                     core_1.Component({

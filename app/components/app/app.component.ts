@@ -8,15 +8,9 @@ import {TodoListComponent} from '../todo-list/todo-list.component';
   templateUrl: 'app/components/app/app.html'
 })
 export class AppComponent {
-  private todos: Todo[] = [];
+  private todos: Todo[];
   
   constructor() {
-    this.todos.push(
-      new Todo('Taste JavaScript', true)
-    );
-    
-    this.todos.push(
-      new Todo('Buy a unicorn', false)
-    );
+    this.todos = Todo.findAll();
   }
 }
