@@ -11,27 +11,28 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var AppComponent;
+    var TodoComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent() {
+            TodoComponent = (function () {
+                function TodoComponent(todo) {
+                    this.todo = todo;
                 }
-                AppComponent = __decorate([
+                TodoComponent = __decorate([
                     core_1.Component({
-                        selector: 'app',
-                        templateUrl: 'app/app.html'
+                        selector: 'todo',
+                        template: "\n    <li>\n      <div class=\"view\">\n        <input class=\"toggle\" type=\"checkbox\">\n        <label>{{ todo.title }}</label>\n        <button class=\"destroy\"></button>\n      </div>\n      <input class=\"edit\" value=\"\">\n    </li>\n  "
                     }), 
-                    __metadata('design:paramtypes', [])
-                ], AppComponent);
-                return AppComponent;
+                    __metadata('design:paramtypes', [Object])
+                ], TodoComponent);
+                return TodoComponent;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("TodoComponent", TodoComponent);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=todo.component.js.map
