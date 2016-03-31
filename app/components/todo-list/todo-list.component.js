@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../models/todo', '../todo-list/todo-list.component'], function(exports_1, context_1) {
+System.register(['angular2/core', '../todo-entry/todo-entry.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,38 +10,36 @@ System.register(['angular2/core', '../../models/todo', '../todo-list/todo-list.c
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, todo_1, todo_list_component_1;
-    var AppComponent;
+    var core_1, todo_entry_component_1;
+    var TodoListComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (todo_1_1) {
-                todo_1 = todo_1_1;
-            },
-            function (todo_list_component_1_1) {
-                todo_list_component_1 = todo_list_component_1_1;
+            function (todo_entry_component_1_1) {
+                todo_entry_component_1 = todo_entry_component_1_1;
             }],
         execute: function() {
-            AppComponent = (function () {
-                function AppComponent() {
-                    this.todos = [];
-                    this.todos.push(new todo_1.Todo('Taste JavaScript', true));
-                    this.todos.push(new todo_1.Todo('Buy a unicorn', false));
+            TodoListComponent = (function () {
+                function TodoListComponent() {
                 }
-                AppComponent = __decorate([
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Array)
+                ], TodoListComponent.prototype, "todos", void 0);
+                TodoListComponent = __decorate([
                     core_1.Component({
-                        selector: 'app',
-                        directives: [todo_list_component_1.TodoListComponent],
-                        templateUrl: 'app/components/app/app.html'
+                        selector: 'todo-list',
+                        directives: [todo_entry_component_1.TodoEntryComponent],
+                        template: "\n    <ul class=\"todo-list\">\n      <li *ngFor=\"#todo of todos\" [class.completed]=\"todo.completed\">\n        <todo-entry [todo]=\"todo\"></todo-entry>\n      </li>\n    </ul>\n  "
                     }), 
                     __metadata('design:paramtypes', [])
-                ], AppComponent);
-                return AppComponent;
+                ], TodoListComponent);
+                return TodoListComponent;
             }());
-            exports_1("AppComponent", AppComponent);
+            exports_1("TodoListComponent", TodoListComponent);
         }
     }
 });
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=todo-list.component.js.map

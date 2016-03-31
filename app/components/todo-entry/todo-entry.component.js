@@ -11,28 +11,34 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var TodoComponent;
+    var TodoEntryComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            TodoComponent = (function () {
-                function TodoComponent(todo) {
-                    this.todo = todo;
+            TodoEntryComponent = (function () {
+                function TodoEntryComponent() {
                 }
-                TodoComponent = __decorate([
+                TodoEntryComponent.prototype.toggleStatus = function () {
+                    this.todo.completed = !this.todo.completed;
+                };
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Object)
+                ], TodoEntryComponent.prototype, "todo", void 0);
+                TodoEntryComponent = __decorate([
                     core_1.Component({
-                        selector: 'todo',
-                        template: "\n    <li>\n      <div class=\"view\">\n        <input class=\"toggle\" type=\"checkbox\">\n        <label>{{ todo.title }}</label>\n        <button class=\"destroy\"></button>\n      </div>\n      <input class=\"edit\" value=\"\">\n    </li>\n  "
+                        selector: 'todo-entry',
+                        template: "\n    <div class=\"view\">\n      <input class=\"toggle\" type=\"checkbox\" [checked]=\"todo.completed\" (click)=\"toggleStatus()\">\n      <label>{{ todo.title }}</label>\n      <button class=\"destroy\"></button>\n    </div>\n    <input class=\"edit\" value=\"\">\n  "
                     }), 
-                    __metadata('design:paramtypes', [Object])
-                ], TodoComponent);
-                return TodoComponent;
+                    __metadata('design:paramtypes', [])
+                ], TodoEntryComponent);
+                return TodoEntryComponent;
             }());
-            exports_1("TodoComponent", TodoComponent);
+            exports_1("TodoEntryComponent", TodoEntryComponent);
         }
     }
 });
-//# sourceMappingURL=todo.component.js.map
+//# sourceMappingURL=todo-entry.component.js.map
