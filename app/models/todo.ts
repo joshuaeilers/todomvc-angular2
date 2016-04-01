@@ -1,5 +1,7 @@
 export class Todo {
   static collection: Todo[] = [];
+  static activeCount: number = 0;
+  static completedCount: number = 0;
   
   title: string;
   completed: boolean;
@@ -10,15 +12,15 @@ export class Todo {
   }
   
   static findAll() {
-    Todo.collection.push(
-      new Todo('Taste JavaScript', true)
-    );
-    
-    Todo.collection.push(
-      new Todo('Buy a unicorn', false)
-    );
+    new Todo('Taste JavaScript', true).save();
+    new Todo('Buy a unicorn', false).save();
     
     return Todo.collection;
+  }
+  
+  static updateCounts() {
+    Todo.completedCount = Todo.collection.filter((todo) => todo.completed).length;
+    Todo.activeCount = Todo.collection.length - Todo.completedCount;
   }
   
   static serialize() {
@@ -26,8 +28,8 @@ export class Todo {
     // persist content to local storage
   }
   
-  toggle() {
-    this.completed = !this.completed;
+  setCompleted(completed) {
+    this.completed = completed;
     this.save();
   }
   
@@ -43,6 +45,7 @@ export class Todo {
       Todo.collection.push(this);
     }
     
+    Todo.updateCounts();
     Todo.serialize();
     
     // todo - notify there was a change to the collection?
@@ -55,10 +58,8 @@ export class Todo {
   remove() {
     let index = Todo.collection.indexOf(this);
     
-    if (index >= 0) {
-      Todo.collection.splice(index, 1);
-    }
-    
+    Todo.collection.splice(index, 1);
+    Todo.updateCounts();
     Todo.serialize();
     
     // notify of changes?

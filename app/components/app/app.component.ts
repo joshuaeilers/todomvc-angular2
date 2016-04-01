@@ -14,8 +14,30 @@ export class AppComponent {
     this.todos = Todo.findAll();
   }
   
+  toggleAll() {
+    let toggle = false;
+    
+    if (this.completedCount() < this.totalCount()) {
+      toggle = true;
+    }
+    
+    Todo.collection.forEach((todo) => todo.setCompleted(toggle));
+  }
+  
+  clearCompleted() {
+    Todo.collection.filter((todo) => todo.completed).forEach((todo) => todo.remove());
+  }
+  
   activeCount() {
-    return Todo.collection.filter((todo) => !todo.completed).length;
+    return Todo.activeCount;
+  }
+  
+  completedCount() {
+    return Todo.completedCount;
+  }
+  
+  totalCount() {
+    return Todo.collection.length;
   }
   
   pluralize(word, count) {

@@ -5,7 +5,7 @@ import {Todo} from '../../models/todo';
   selector: 'todo-entry',
   template: `
     <div class="view">
-      <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleStatus()">
+      <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleStatus($event)">
       <label>{{ todo.title }}</label>
       <button class="destroy" (click)="remove()"></button>
     </div>
@@ -15,8 +15,8 @@ import {Todo} from '../../models/todo';
 export class TodoEntryComponent {
   @Input() todo: Todo;
   
-  toggleStatus() {
-    this.todo.toggle();
+  toggleStatus($event) {
+    this.todo.setCompleted($event.target.checked);
   }
   
   remove() {

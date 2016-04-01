@@ -11,16 +11,20 @@ System.register([], function(exports_1, context_1) {
                     this.completed = completed;
                 }
                 Todo.findAll = function () {
-                    Todo.collection.push(new Todo('Taste JavaScript', true));
-                    Todo.collection.push(new Todo('Buy a unicorn', false));
+                    new Todo('Taste JavaScript', true).save();
+                    new Todo('Buy a unicorn', false).save();
                     return Todo.collection;
+                };
+                Todo.updateCounts = function () {
+                    Todo.completedCount = Todo.collection.filter(function (todo) { return todo.completed; }).length;
+                    Todo.activeCount = Todo.collection.length - Todo.completedCount;
                 };
                 Todo.serialize = function () {
                     var content = JSON.stringify(Todo.collection.map(function (todo) { return todo.toString(); }));
                     // persist content to local storage
                 };
-                Todo.prototype.toggle = function () {
-                    this.completed = !this.completed;
+                Todo.prototype.setCompleted = function (completed) {
+                    this.completed = completed;
                     this.save();
                 };
                 Todo.prototype.setTitle = function (title) {
@@ -32,6 +36,7 @@ System.register([], function(exports_1, context_1) {
                     if (index < 0) {
                         Todo.collection.push(this);
                     }
+                    Todo.updateCounts();
                     Todo.serialize();
                     // todo - notify there was a change to the collection?
                     // subscribe returns an observable, and it emits changes that the app subscribes to?
@@ -41,9 +46,8 @@ System.register([], function(exports_1, context_1) {
                 };
                 Todo.prototype.remove = function () {
                     var index = Todo.collection.indexOf(this);
-                    if (index >= 0) {
-                        Todo.collection.splice(index, 1);
-                    }
+                    Todo.collection.splice(index, 1);
+                    Todo.updateCounts();
                     Todo.serialize();
                     // notify of changes?
                 };
@@ -54,6 +58,8 @@ System.register([], function(exports_1, context_1) {
                     });
                 };
                 Todo.collection = [];
+                Todo.activeCount = 0;
+                Todo.completedCount = 0;
                 return Todo;
             }());
             exports_1("Todo", Todo);

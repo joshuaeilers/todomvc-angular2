@@ -24,8 +24,8 @@ System.register(['angular2/core', '../../models/todo'], function(exports_1, cont
             TodoEntryComponent = (function () {
                 function TodoEntryComponent() {
                 }
-                TodoEntryComponent.prototype.toggleStatus = function () {
-                    this.todo.toggle();
+                TodoEntryComponent.prototype.toggleStatus = function ($event) {
+                    this.todo.setCompleted($event.target.checked);
                 };
                 TodoEntryComponent.prototype.remove = function () {
                     this.todo.remove();
@@ -37,7 +37,7 @@ System.register(['angular2/core', '../../models/todo'], function(exports_1, cont
                 TodoEntryComponent = __decorate([
                     core_1.Component({
                         selector: 'todo-entry',
-                        template: "\n    <div class=\"view\">\n      <input class=\"toggle\" type=\"checkbox\" [checked]=\"todo.completed\" (click)=\"toggleStatus()\">\n      <label>{{ todo.title }}</label>\n      <button class=\"destroy\" (click)=\"remove()\"></button>\n    </div>\n    <input class=\"edit\" value=\"\">\n  "
+                        template: "\n    <div class=\"view\">\n      <input class=\"toggle\" type=\"checkbox\" [checked]=\"todo.completed\" (click)=\"toggleStatus($event)\">\n      <label>{{ todo.title }}</label>\n      <button class=\"destroy\" (click)=\"remove()\"></button>\n    </div>\n    <input class=\"edit\" value=\"\">\n  "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], TodoEntryComponent);

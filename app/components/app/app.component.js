@@ -28,8 +28,24 @@ System.register(['angular2/core', '../../models/todo', '../todo-list/todo-list.c
                 function AppComponent() {
                     this.todos = todo_1.Todo.findAll();
                 }
+                AppComponent.prototype.toggleAll = function () {
+                    var toggle = false;
+                    if (this.completedCount() < this.totalCount()) {
+                        toggle = true;
+                    }
+                    todo_1.Todo.collection.forEach(function (todo) { return todo.setCompleted(toggle); });
+                };
+                AppComponent.prototype.clearCompleted = function () {
+                    todo_1.Todo.collection.filter(function (todo) { return todo.completed; }).forEach(function (todo) { return todo.remove(); });
+                };
                 AppComponent.prototype.activeCount = function () {
-                    return todo_1.Todo.collection.filter(function (todo) { return !todo.completed; }).length;
+                    return todo_1.Todo.activeCount;
+                };
+                AppComponent.prototype.completedCount = function () {
+                    return todo_1.Todo.completedCount;
+                };
+                AppComponent.prototype.totalCount = function () {
+                    return todo_1.Todo.collection.length;
                 };
                 AppComponent.prototype.pluralize = function (word, count) {
                     return count === 1 ? word : word + 's';
