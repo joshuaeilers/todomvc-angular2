@@ -28,6 +28,12 @@ System.register(['angular2/core', '../../models/todo', '../todo-list/todo-list.c
                 function AppComponent() {
                     this.todos = todo_1.Todo.findAll();
                 }
+                AppComponent.prototype.activeCount = function () {
+                    return todo_1.Todo.collection.filter(function (todo) { return !todo.completed; }).length;
+                };
+                AppComponent.prototype.pluralize = function (word, count) {
+                    return count === 1 ? word : word + 's';
+                };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'app',

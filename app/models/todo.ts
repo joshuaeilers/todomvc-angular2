@@ -1,15 +1,15 @@
 export class Todo {
-  private static collection: Todo[] = [];
+  static collection: Todo[] = [];
   
-  private title: string;
-  private completed: boolean;
+  title: string;
+  completed: boolean;
     
   constructor(title, completed) {
     this.title = title;
     this.completed = completed;
   }
   
-  public static findAll() {
+  static findAll() {
     Todo.collection.push(
       new Todo('Taste JavaScript', true)
     );
@@ -21,22 +21,22 @@ export class Todo {
     return Todo.collection;
   }
   
-  public static serialize() {
+  static serialize() {
     let content = JSON.stringify(Todo.collection.map((todo) => todo.toString()));
     // persist content to local storage
   }
   
-  public toggle() {
+  toggle() {
     this.completed = !this.completed;
     this.save();
   }
   
-  public setTitle(title) {
+  setTitle(title) {
     this.title = title;
     this.save();
   }
   
-  public save() {
+  save() {
     let index = Todo.collection.indexOf(this);
     
     if (index < 0) {
@@ -52,7 +52,7 @@ export class Todo {
     // however, if it just binds to variables, it probably doesn't need to be notified
   }
   
-  public remove() {
+  remove() {
     let index = Todo.collection.indexOf(this);
     
     if (index >= 0) {
@@ -64,7 +64,7 @@ export class Todo {
     // notify of changes?
   }
   
-  public toString() {
+  toString() {
     return JSON.stringify({
       title: this.title,
       completed: this.completed

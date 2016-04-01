@@ -8,9 +8,17 @@ import {TodoListComponent} from '../todo-list/todo-list.component';
   templateUrl: 'app/components/app/app.html'
 })
 export class AppComponent {
-  private todos: Todo[];
+  todos: Todo[];
   
   constructor() {
     this.todos = Todo.findAll();
+  }
+  
+  activeCount() {
+    return Todo.collection.filter((todo) => !todo.completed).length;
+  }
+  
+  pluralize(word, count) {
+    return count === 1 ? word : word + 's';
   }
 }
