@@ -27,7 +27,14 @@ System.register(['angular2/core', '../../models/todo', '../todo-list/todo-list.c
             AppComponent = (function () {
                 function AppComponent() {
                     this.todos = todo_1.Todo.findAll();
+                    this.newTitle = '';
                 }
+                AppComponent.prototype.add = function ($event) {
+                    if ($event.keyCode === AppComponent.ENTER_KEY) {
+                        new todo_1.Todo(this.newTitle, false).save();
+                        this.newTitle = '';
+                    }
+                };
                 AppComponent.prototype.toggleAll = function () {
                     var toggle = false;
                     if (this.completedCount() < this.totalCount()) {
@@ -50,6 +57,7 @@ System.register(['angular2/core', '../../models/todo', '../todo-list/todo-list.c
                 AppComponent.prototype.pluralize = function (word, count) {
                     return count === 1 ? word : word + 's';
                 };
+                AppComponent.ENTER_KEY = 13;
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'app',

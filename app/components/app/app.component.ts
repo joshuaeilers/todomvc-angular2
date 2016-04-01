@@ -8,10 +8,20 @@ import {TodoListComponent} from '../todo-list/todo-list.component';
   templateUrl: 'app/components/app/app.html'
 })
 export class AppComponent {
+  static ENTER_KEY: number = 13;
   todos: Todo[];
+  newTitle: string;
   
   constructor() {
     this.todos = Todo.findAll();
+    this.newTitle = '';
+  }
+  
+  add($event) {
+    if ($event.keyCode === AppComponent.ENTER_KEY) {
+      new Todo(this.newTitle, false).save();
+      this.newTitle = '';
+    }
   }
   
   toggleAll() {

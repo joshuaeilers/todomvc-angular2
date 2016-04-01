@@ -1,16 +1,16 @@
 <section class="todoapp">
   <header class="header">
     <h1>todos</h1>
-    <input class="new-todo" placeholder="What needs to be done?" autofocus>
+    <input class="new-todo" placeholder="What needs to be done?" autofocus (keydown)="add($event)" [(ngModel)]="newTitle">
   </header>
-  <section class="main" *ngIf="activeCount() || completedCount()">
+  <section class="main" *ngIf="totalCount()">
     <input class="toggle-all" type="checkbox" (click)="toggleAll()">
     <label for="toggle-all">Mark all as complete</label>
     
     <todo-list [todos]="todos"></todo-list>
     
   </section>
-  <footer class="footer" *ngIf="activeCount() || completedCount()">
+  <footer class="footer" *ngIf="totalCount()">
     <span class="todo-count"><strong>{{ activeCount() }}</strong> {{ pluralize('item', activeCount()) }} left</span>
     <!-- Remove this if you don't implement routing -->
     <ul class="filters">
