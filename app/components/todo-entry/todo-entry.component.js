@@ -23,7 +23,33 @@ System.register(['angular2/core', '../../models/todo'], function(exports_1, cont
         execute: function() {
             TodoEntryComponent = (function () {
                 function TodoEntryComponent() {
+                    this.onEdit = new core_1.EventEmitter();
+                    this.editing = false;
                 }
+                TodoEntryComponent.prototype.toggleMode = function () {
+                    this.editing = !this.editing;
+                    this.onEdit.emit(this.todo);
+                };
+                TodoEntryComponent.prototype.save = function ($event) {
+                    if (!this.editing) {
+                        return;
+                    }
+                    if ($event.keyCode === 27) {
+                        this.toggleMode();
+                    }
+                    else if ($event.type === 'blur' || $event.keyCode === 13) {
+                        console.log($event);
+                        var title = $event.target.value.trim();
+                        if (title.length) {
+                            this.todo.setTitle(title);
+                        }
+                        else {
+                            this.todo.remove();
+                        }
+                        // todo - this is throwing a dehydrated resource error
+                        this.toggleMode();
+                    }
+                };
                 TodoEntryComponent.prototype.toggleStatus = function ($event) {
                     this.todo.setCompleted($event.target.checked);
                 };
@@ -34,10 +60,14 @@ System.register(['angular2/core', '../../models/todo'], function(exports_1, cont
                     core_1.Input(), 
                     __metadata('design:type', todo_1.Todo)
                 ], TodoEntryComponent.prototype, "todo", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], TodoEntryComponent.prototype, "onEdit", void 0);
                 TodoEntryComponent = __decorate([
                     core_1.Component({
                         selector: 'todo-entry',
-                        template: "\n    <div class=\"view\">\n      <input class=\"toggle\" type=\"checkbox\" [checked]=\"todo.completed\" (click)=\"toggleStatus($event)\">\n      <label>{{ todo.title }}</label>\n      <button class=\"destroy\" (click)=\"remove()\"></button>\n    </div>\n    <input class=\"edit\" value=\"\">\n  "
+                        template: "\n    <div *ngIf=\"!editing\" class=\"view\">\n      <input class=\"toggle\" type=\"checkbox\" [checked]=\"todo.completed\" (click)=\"toggleStatus($event)\">\n      <label (dblclick)=\"toggleMode()\">{{ todo.title }}</label>\n      <button class=\"destroy\" (click)=\"remove()\"></button>\n    </div>\n    <input *ngIf=\"editing\" class=\"edit\" value=\"{{ todo.title }}\" (blur)=\"save($event)\" (keydown)=\"save($event)\">\n  "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], TodoEntryComponent);

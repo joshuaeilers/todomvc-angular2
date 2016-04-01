@@ -24,6 +24,9 @@ System.register(['angular2/core', '../todo-entry/todo-entry.component'], functio
             TodoListComponent = (function () {
                 function TodoListComponent() {
                 }
+                TodoListComponent.prototype.onEdit = function (todo) {
+                    this.editingTodo = this.editingTodo !== todo ? todo : null;
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Array)
@@ -32,7 +35,7 @@ System.register(['angular2/core', '../todo-entry/todo-entry.component'], functio
                     core_1.Component({
                         selector: 'todo-list',
                         directives: [todo_entry_component_1.TodoEntryComponent],
-                        template: "\n    <ul class=\"todo-list\">\n      <li *ngFor=\"#todo of todos\" [class.completed]=\"todo.completed\">\n        <todo-entry [todo]=\"todo\"></todo-entry>\n      </li>\n    </ul>\n  "
+                        template: "\n    <ul class=\"todo-list\">\n      <li *ngFor=\"#todo of todos\" [class.completed]=\"todo.completed\" [class.editing]=\"editingTodo === todo\">\n        <todo-entry [todo]=\"todo\" (onEdit)=\"onEdit(todo)\"></todo-entry>\n      </li>\n    </ul>\n  "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], TodoListComponent);

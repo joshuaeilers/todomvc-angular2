@@ -7,8 +7,8 @@ import {TodoEntryComponent} from '../todo-entry/todo-entry.component';
   directives: [TodoEntryComponent],
   template: `
     <ul class="todo-list">
-      <li *ngFor="#todo of todos" [class.completed]="todo.completed">
-        <todo-entry [todo]="todo"></todo-entry>
+      <li *ngFor="#todo of todos" [class.completed]="todo.completed" [class.editing]="editingTodo === todo">
+        <todo-entry [todo]="todo" (onEdit)="onEdit(todo)"></todo-entry>
       </li>
     </ul>
   `
@@ -16,4 +16,9 @@ import {TodoEntryComponent} from '../todo-entry/todo-entry.component';
 export class TodoListComponent {
   @Input()
   todos: Todo[];
+  editingTodo: Todo;
+  
+  onEdit(todo) {    
+    this.editingTodo = this.editingTodo !== todo ? todo : null;
+  }
 }

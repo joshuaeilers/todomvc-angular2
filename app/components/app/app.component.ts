@@ -8,7 +8,6 @@ import {TodoListComponent} from '../todo-list/todo-list.component';
   templateUrl: 'app/components/app/app.html'
 })
 export class AppComponent {
-  static ENTER_KEY: number = 13;
   todos: Todo[];
   newTitle: string;
   
@@ -18,9 +17,12 @@ export class AppComponent {
   }
   
   add($event) {
-    if ($event.keyCode === AppComponent.ENTER_KEY) {
-      new Todo(this.newTitle, false).save();
-      this.newTitle = '';
+    if ($event.keyCode === 13) {
+      let title = this.newTitle.trim();
+      if (title.length) {
+        new Todo(this.newTitle, false).save();
+        this.newTitle = '';
+      }
     }
   }
   
