@@ -7,15 +7,19 @@ import {Todo} from '../../models/todo';
     <div class="view">
       <input class="toggle" type="checkbox" [checked]="todo.completed" (click)="toggleStatus()">
       <label>{{ todo.title }}</label>
-      <button class="destroy"></button>
+      <button class="destroy" (click)="remove()"></button>
     </div>
     <input class="edit" value="">
   `
 })
 export class TodoEntryComponent {
-  @Input() todo;
+  @Input() todo: Todo;
   
   toggleStatus() {
-    this.todo.completed = !this.todo.completed;
+    this.todo.toggle();
+  }
+  
+  remove() {
+    this.todo.remove();
   }
 }
